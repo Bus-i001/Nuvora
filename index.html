@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Nuvora – Discover. Learn. Enjoy.</title>
+<meta name="description" content="Nuvora is an international publication of guides, recipes and tools for technology, digital life, food, wellness and everyday knowledge, with a shop of downloadable resources.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=Manrope:wght@600;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --navy:#0e1a33; --navy-2:#1a2a4d; --ivory:#faf6ec; --sage:#a9b9a1; --sage-d:#6f8566;
+  --gold:#b8963e; --white:#fff; --ink:#1c2438;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:Inter,system-ui,sans-serif;background:var(--ivory);color:var(--ink);line-height:1.65;font-size:17px}
+h1,h2,h3,.brand{font-family:Manrope,"DM Sans",system-ui,sans-serif;line-height:1.15}
+a{color:inherit}
+:focus-visible{outline:3px solid var(--gold);outline-offset:3px}
+.wrap{max-width:1040px;margin:0 auto;padding:0 20px}
+
+/* header */
+header{background:var(--navy);color:var(--ivory);position:sticky;top:0;z-index:5}
+.bar{display:flex;align-items:center;justify-content:space-between;height:60px}
+.brand{font-weight:800;font-size:1.4rem;text-decoration:none;letter-spacing:.01em}
+.brand span{color:var(--gold)}
+details.menu summary{list-style:none;cursor:pointer;padding:10px 4px;font-weight:600;font-family:Manrope,sans-serif}
+details.menu summary::-webkit-details-marker{display:none}
+details.menu nav{position:absolute;left:0;right:0;top:60px;background:var(--navy-2);padding:8px 20px 20px}
+details.menu nav a{display:block;padding:12px 0;text-decoration:none;border-bottom:1px solid rgba(250,246,236,.12)}
+details.menu nav a:last-child{border:0;color:var(--gold);font-weight:600}
+@media(min-width:860px){
+  details.menu summary{display:none}
+  details.menu nav{position:static;display:flex!important;gap:22px;background:none;padding:0}
+  details.menu nav a{border:0;padding:0;font-size:.95rem}
+}
+
+/* hero */
+.hero{background:var(--navy);color:var(--ivory);padding:56px 0 72px}
+.hero h1{font-weight:800;font-size:clamp(2.6rem,11vw,5.2rem)}
+.hero h1 span{display:block}
+.hero h1 span:nth-child(2){color:var(--sage)}
+.hero h1 span:nth-child(3){color:var(--gold)}
+.hero p{max-width:34em;margin-top:24px;font-size:1.1rem;color:#d9d6cb}
+.btns{display:flex;flex-wrap:wrap;gap:12px;margin-top:28px}
+.btn{display:inline-block;padding:13px 22px;border-radius:8px;font-weight:600;text-decoration:none;font-family:Manrope,sans-serif}
+.btn.gold{background:var(--gold);color:var(--navy)}
+.btn.line{border:2px solid var(--sage);color:var(--ivory)}
+
+section{padding:56px 0}
+h2{font-size:clamp(1.7rem,6vw,2.3rem);font-weight:800;color:var(--navy);margin-bottom:12px}
+.lead{max-width:36em;
