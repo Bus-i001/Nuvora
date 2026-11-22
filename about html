@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>About Us – Nuvora</title>
+<meta name="description" content="Nuvora is an international publication of practical guides, recipes and tools, with a shop of downloadable resources.">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=Manrope:wght@600;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header><div class="wrap bar"><a class="brand" href="index.html">Nuvora<span>.</span></a></div></header>
+
+<main>
+<div class="wrap">
+  <h1>About Nuvora</h1>
+  <p class="updated">Discover. Learn. Enjoy.</p>
+
+  <p>Nuvora is an international publication for people who like to understand how things work and get things done. We write clear, practical guides on technology, digital life, food and cooking, health and wellness, and everyday knowledge.</p>
+
+  <h2>What we do</h2>
+  <ul>
+    <li><strong>Publish useful articles.</strong> Informational pieces, step-by-step how-tos, recipes and practical guides, and honest comparisons.</li>
+    <li><strong>Build free tools.</strong> Converters, scalers, timers and generators that save you time in the kitchen and beyond.</li>
+    <li><strong>Make downloadable resources.</strong> Planners, trackers, checklists and guides in the Nuvora shop, available as printable PDFs and digital versions.</li>
+  </ul>
+
+  <h2>How we work</h2>
+  <p>Everything we publish is original, researched and written to be accurate and easy to follow. Our recipes use both metric and US measurements, because our readers come from all over the world.</p>
+
+  <h2>How we earn</h2>
+  <p>The site is free to read. We earn through advertising, affiliate links and our own digital products. Read more in our <a href="affiliate-disclosure.html">Affiliate Disclosure</a>.</p>
+
+  <h2>Get in touch</h2>
+  <p>We would love to hear from you. Visit our <a href="contact.html">Contact page</a>.</p>
+</div>
+</main>
+
+<footer>
+  <div class="wrap">
+    <p><a href="index.html">Home</a> · <a href="privacy.html">Privacy Policy</a> · <a href="cookie-policy.html">Cookie Policy</a> · <a href="terms.html">Terms &amp; Conditions</a> · <a href="affiliate-disclosure.html">Affiliate Disclosure</a></p>
+    <p>&copy; 2026 Nuvora</p>
+  </div>
+</footer>
+</body>
+</html>
