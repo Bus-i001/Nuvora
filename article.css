@@ -1,0 +1,27 @@
+.meta{color:#5a6379;font-size:.92rem;margin-bottom:20px}
+.article-img{width:100%;height:auto;border-radius:10px;margin:8px 0 20px;background:#e9e4d4}
+.intro{font-size:1.12rem;color:#2d364d}
+.toc{background:#fff;border-left:4px solid var(--sage);padding:14px 18px;margin:20px 0}
+.toc b{font-family:Manrope,sans-serif;color:var(--navy)}
+.toc ul{margin:8px 0 0}
+.aff-note{background:#f3eed9;border:1px solid #e0d6b0;border-radius:8px;padding:12px 14px;font-size:.92rem;margin:0 0 22px}
+.callout{background:#fff;border-left:4px solid var(--gold);padding:14px 18px;margin:20px 0}
+ol.steps{list-style:none;padding:0;counter-reset:s}
+ol.steps li{counter-increment:s;position:relative;padding:0 0 18px 48px}
+ol.steps li::before{content:counter(s);position:absolute;left:0;top:0;width:34px;height:34px;border-radius:50%;background:var(--navy);color:var(--ivory);font-family:Manrope,sans-serif;font-weight:800;display:flex;align-items:center;justify-content:center}
+.recipe-box{background:#fff;border:2px solid var(--sage);border-radius:12px;padding:18px;margin:22px 0}
+.facts{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin:12px 0 18px}
+.facts div{background:var(--ivory);border-radius:8px;padding:10px 12px;font-size:.92rem}
+.facts b{display:block;font-family:Manrope,sans-serif;color:var(--navy)}
+.table-wrap{overflow-x:auto;margin:16px 0}
+table{border-collapse:collapse;width:100%;min-width:480px;background:#fff}
+th,td{border:1px solid #d8d2c0;padding:10px 12px;text-align:left;font-size:.95rem}
+th{background:var(--navy);color:var(--ivory);font-family:Manrope,sans-serif}
+.pc{display:grid;gap:14px;margin:16px 0}
+@media(min-width:640px){.pc{grid-template-columns:1fr 1fr}}
+.pc div{background:#fff;border-radius:10px;padding:14px 16px}
+.pc .pros{border-top:4px solid var(--sage)}
+.pc .cons{border-top:4px solid var(--gold)}
+.pc h3{font-family:Manrope,sans-serif;font-size:1.05rem;color:var(--navy);margin-bottom:6px}
+.btn-aff{display:inline-block;background:var(--gold);color:var(--navy);font-weight:700;font-family:Manrope,sans-serif;text-decoration:none;padding:12px 20px;border-radius:8px;margin:6px 0 14px}
+h3{font-family:Manrope,sans-serif;color:var(--navy);margin:22px 0 6px}
