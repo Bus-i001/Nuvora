@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Free Kitchen Tools – Nuvora</title>
+<meta name="description" content="Free recipe scaler, cooking measurement converter, cooking timer and dinner idea generator.">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=Manrope:wght@600;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<style>
+.wide{max-width:760px}
+.tool{background:#fff;border:1px solid #e3ddca;border-radius:12px;padding:20px;margin:22px 0}
+.tool h2{margin:0 0 6px}
+.tool .hint{color:#5a6379;font-size:.95rem;margin-bottom:14px}
+label{display:block;font-weight:500;margin:12px 0 4px;font-size:.95rem}
+input,select,textarea{width:100%;font:inherit;padding:11px 12px;border:1px solid #c9c2ab;border-radius:8px;background:#fff;color:var(--ink)}
+textarea{min-height:120px}
+.row{display:grid;gap:12px}
+@media(min-width:560px){.row{grid-template-columns:1fr 1fr}}
+button{font:inherit;font-family:Manrope,sans-serif;font-weight:700;background:var(--navy);color:var(--ivory);border:0;border-radius:8px;padding:12px 20px;margin:14px 8px 0 0;cursor:pointer}
+button.alt{background:transparent;color:var(--navy);border:2px solid var(--navy)}
+.out{margin-top:16px;background:var(--ivory);border-left:4px solid var(--gold);padding:12px 16px;min-height:48px;white-space:pre-line}
+.big{font-family:Manrope,sans-serif;font-weight:800;font-size:3rem;color:var(--navy);text-align:center;margin:8px 0}
+</style>
+</head>
+<body>
+<header><div class="wrap bar"><a class="brand" href="index.html">Nuvora<span>.</span></a></div></header>
+
+<main>
+<div class="wrap wide">
+  <h1>Free Kitchen Tools</h1>
+  <p class="updated">Quick, simple and free. They work on any phone.</p>
+
+  <!-- RECIPE SCALER -->
+  <section class="tool" id="recipe-scaler">
+    <h2>Recipe scaler</h2>
+    <p class="hint">Paste your ingredients, one per line, each starting with its amount (for example 1 1/2 cups flour).</p>
+    <label for="rs-text">Ingredients</label>
+    <textarea id="rs-text">2 cups flour
+1/2 tsp salt
+250 ml milk
+1 1/2 tbsp sugar
+2 eggs</textarea>
+    <div class="row">
+      <div><label for="rs-from">Original servings</label><input id="rs-from" type="number" min="1" value="4"></div>
+      <div><label for="rs-to">New servings</label><input id="rs-to" type="number" min="1" value="6"></div>
+    </div>
+    <button type="button" onclick="scaleRecipe()">Scale recipe</button>
+    <div class="out" id="rs-out" aria-live="polite"></div>
+  </section>
+
+  <!-- CONVERTER -->
+  <section class="tool" id="converter">
+    <h2>Cooking measurement converter</h2>
+    <p class="hint">Convert between metric and US cooking measurements.</p>
+    <div class="row">
+      <div><label for="cv-type">Type</label>
+        <select id="cv-type" onchange="fillUnits()">
+          <option value="volume">Volume</option>
+          <option value="weight">Weight</option>
+          <option value="temp">Temperature</option>
+        </select></div>
+      <div><label for="cv-val">Amount</label><input id="cv-val" type="number" step="any" value="1"></div>
+      <div><label for="cv-from">From</label><select id="cv-from"></select></div>
+      <div><label for="cv-to">To</label><select id="cv-to"></select></div>
+    </div>
+    <button type="button" onclick="convert()">Convert</button>
+    <div class="out" id="cv-out" aria-live="polite"></div>
+  </section>
+
+  <!-- TIMER -->
+  <section class="tool" id="timer">
+    <h2>Cooking timer</h2>
+    <p class="hint">Keep this page open while the timer runs.</p>
+    <div class="row">
+      <div><label for="tm-min">Minutes</label><input id="tm-min" type="number" min="0" value="10"></div>
+      <div><label for="tm-sec">Seconds</label><input id="tm-sec" type="number" min="0" max="59" value="0"></div>
+    </div>
+    <div class="big" id="tm-disp" aria-live="off">10:00</div>
+    <button type="button" onclick="timerStart()">Start</button>
+    <button type="button" class="alt" onclick="timerPause()">Pause</button>
+    <button type="button" class="alt" onclick="timerReset()">Reset</button>
+    <div class="out" id="tm-out" aria-live="assertive"></div>
+  </section>
+
+  <!-- DINNER GENERATOR -->
+  <section class="tool" id="dinner-generator">
+    <h2>Dinner idea generator</h2>
+    <p class="hint">Stuck on what to cook? Pick a style and tap the button.</p>
+    <label for="dg-type">Style</label>
+    <select id="dg-type">
+      <option value="any">Anything</option>
+      <option value="quick">Quick (under 30 minutes)</option>
+      <option value="veg">Vegetarian</option>
+      <option value="budget">Budget-friendly</option>
+      <option value="comfort">Comfort food</option>
+    </select>
+    <button type="button" onclick="dinner()">Give me an idea</button>
+    <div class="out" id="dg-out" aria-live="polite"></div>
+  </section>
+</div>
+</main>
+
+<footer>
+  <div class="wrap">
+    <p><a href="index.html">Home</a> · <a href="food-cooking.html">Food &amp; Cooking</a> · <a href="privacy.html">Privacy Policy</a> · <a href="cookie-policy.html">Cookie Policy</a> · <a href="terms.html">Terms &amp; Conditions</a> · <a href="affiliate-disclosure.html">Affiliate Disclosure</a></p>
+    <p>&copy; 2026 Nuvora</p>
+  </div>
+</footer>
+
+<script>
+/* ---------- Recipe scaler ---------- */
+function parseAmount(line){
+  var m=line.match(/^\s*(\d+\s+\d+\/\d+|\d+\/\d+|\d*\.?\d+)\s*(.*)$/);
+  if(!m) return null;
+  var s=m[1].trim(), v;
+  if(s.indexOf(' ')>-1){var p=s.split(/\s+/),f=p[1].split('/');v=parseFloat(p[0])+f[0]/f[1];}
+  else if(s.indexOf('/')>-1){var f2=s.split('/');v=f2[0]/f2[1];}
+  else v=parseFloat(s);
+  return {value:v,rest:m[2]};
+}
+function nice(n){
+  var r=Math.round(n*100)/100;
+  var whole=Math.floor(r), frac=r-whole;
+  var fr={0.25:'1/4',0.33:'1/3',0.5:'1/2',0.67:'2/3',0.75:'3/4'};
+  var key=Math.round(frac*100)/100;
+  if(fr[key]!==undefined) return (whole?whole+' ':'')+fr[key];
+  return String(r);
+}
+function scaleRecipe(){
+  var from=parseFloat(document.getElementById('rs-from').value);
+  var to=parseFloat(document.getElementById('rs-to').value);
+  var out=document.getElementById('rs-out');
+  if(!(from>0)||!(to>0)){out.textContent='Please enter servings greater than zero.';return;}
+  var k=to/from;
+  var lines=document.getElementById('rs-text').value.split('\n');
+  var res=lines.filter(function(l){return l.trim();}).map(function(l){
+    var p=parseAmount(l);
+    return p? nice(p.value*k)+' '+p.rest : l.trim()+'  (no amount found)';
+  });
+  out.textContent='For '+to+' servings:\n'+res.join('\n');
+}
+
+/* ---------- Converter ---------- */
+var UNITS={
+  volume:{base:'ml',list:{'ml':1,'litre (l)':1000,'tsp (US)':4.92892,'tbsp (US)':14.7868,'fl oz (US)':29.5735,'cup (US)':236.588,'pint (US)':473.176}},
+  weight:{base:'g',list:{'g':1,'kg':1000,'oz':28.3495,'lb':453.592}},
+  temp:{list:{'°C':1,'°F':1}}
+};
+function fillUnits(){
+  var t=document.getElementById('cv-type').value, names=Object.keys(UNITS[t].list);
+  ['cv-from','cv-to'].forEach(function(id,i){
+    var sel=document.getElementById(id); sel.innerHTML='';
+    names.forEach(function(n){var o=document.createElement('option');o.value=n;o.textContent=n;sel.appendChild(o);});
+    sel.selectedIndex=Math.min(i,names.length-1);
+  });
+}
+function convert(){
+  var t=document.getElementById('cv-type').value;
+  var v=parseFloat(document.getElementById('cv-val').value);
+  var a=document.getElementById('cv-from').value, b=document.getElementById('cv-to').value;
+  var out=document.getElementById('cv-out'), r;
+  if(isNaN(v)){out.textContent='Please enter a number.';return;}
+  if(t==='temp'){
+    if(a===b) r=v;
+    else if(a==='°C') r=v*9/5+32;
+    else r=(v-32)*5/9;
+  } else {
+    r=v*UNITS[t].list[a]/UNITS[t].list[b];
+  }
+  out.textContent=v+' '+a+' = '+(Math.round(r*100)/100)+' '+b;
+}
+fillUnits();
+
+/* ---------- Timer ---------- */
+var tLeft=600, tId=null;
+function fmt(s){var m=Math.floor(s/60),x=s%60;return m+':'+(x<10?'0':'')+x;}
+function readInputs(){
+  var m=parseInt(document.getElementById('tm-min').value)||0;
+  var s=parseInt(document.getElementById('tm-sec').value)||0;
+  return m*60+s;
+}
+function timerStart(){
+  if(tId) return;
+  if(tLeft<=0||document.getElementById('tm-out').textContent){tLeft=readInputs();}
+  document.getElementById('tm-out').textContent='';
+  if(tLeft<=0) return;
+  document.getElementById('tm-disp').textContent=fmt(tLeft);
+  tId=setInterval(function(){
+    tLeft--;
+    document.getElementById('tm-disp').textContent=fmt(Math.max(tLeft,0));
+    if(tLeft<=0){
+      clearInterval(tId);tId=null;
+      document.getElementById('tm-out').textContent='Time is up!';
+      if(navigator.vibrate) navigator.vibrate([300,150,300]);
+    }
+  },1000);
+}
+function timerPause(){clearInterval(tId);tId=null;}
+function timerReset(){
+  clearInterval(tId);tId=null;
+  tLeft=readInputs();
+  document.getElementById('tm-disp').textContent=fmt(tLeft);
+  document.getElementById('tm-out').textContent='';
+}
+['tm-min','tm-sec'].forEach(function(id){
+  document.getElementById(id).addEventListener('input',function(){if(!tId)timerReset();});
+});
+
+/* ---------- Dinner generator ---------- */
+var IDEAS=[
+  ['Veggie stir-fry with rice',['quick','veg','budget']],
+  ['Spaghetti with tomato and basil sauce',['quick','veg','budget']],
+  ['Egg fried rice',['quick','budget']],
+  ['Chicken and vegetable traybake',['comfort']],
+  ['Lentil soup with crusty bread',['veg','budget','comfort']],
+  ['Quesadillas with beans and cheese',['quick','veg','budget']],
+  ['Baked potatoes with toppings',['veg','budget','comfort']],
+  ['Beef and vegetable stew',['comfort']],
+  ['Omelette with salad',['quick','veg','budget']],
+  ['Chicken wraps with crunchy veg',['quick']],
+  ['Macaroni cheese',['veg','budget','comfort']],
+  ['Chilli with rice',['budget','comfort']],
+  ['Tuna pasta salad',['quick','budget']],
+  ['Pancakes for dinner',['quick','veg','comfort']],
+  ['Homemade pizza on flatbread',['quick','veg']],
+  ['Vegetable curry with rice',['veg','budget','comfort']],
+  ['Sausages, mash and peas',['comfort','budget']]
+];
+function dinner(){
+  var t=document.getElementById('dg-type').value;
+  var pool=IDEAS.filter(function(i){return t==='any'||i[1].indexOf(t)>-1;});
+  var pick=pool[Math.floor(Math.random()*pool.length)];
+  document.getElementById('dg-out').textContent='Tonight, try: '+pick[0];
+}
+</script>
+</body>
+</html>
